@@ -1,6 +1,6 @@
 /* === Wabi-Sabi Interactions === */
 
-// Draw Enso circle - imperfect, hand-drawn
+// Draw Enso circle - imperfect, hand-drawn with ink drying effect
 function drawEnso() {
   const canvas = document.getElementById('enso');
   if (!canvas) return;
@@ -14,10 +14,13 @@ function drawEnso() {
   const cy = size / 2;
   const radius = 180;
   
-  ctx.strokeStyle = '#3a3530';
   ctx.lineCap = 'round';
   
-  // Draw with varying thickness - like a real brush
+  // Get ink color based on dark mode
+  const isDark = document.body.classList.contains('dark-mode');
+  const baseColor = isDark ? '212, 204, 195' : '58, 53, 48';
+  
+  // Draw with varying thickness and opacity - like a real brush with drying ink
   const points = 300;
   const gap = 0.4;
   
@@ -28,6 +31,14 @@ function drawEnso() {
     // Brush pressure varies
     const pressure = 3 + Math.sin(t1 * 1.5) * 4 + Math.cos(t1 * 0.7) * 2;
     ctx.lineWidth = Math.max(1, pressure);
+    
+    // Ink drying effect - opacity fades as we progress
+    const progress = i / points;
+    const dryingEffect = 1 - (progress * 0.5); // Fade from 1.0 to 0.5
+    const inkVariation = 0.85 + Math.sin(t1 * 5) * 0.15; // Subtle variation
+    const alpha = dryingEffect * inkVariation;
+    
+    ctx.strokeStyle = `rgba(${baseColor}, ${alpha})`;
     
     const wobble1 = Math.sin(t1 * 3) * 5 + Math.cos(t1 * 7) * 2.5;
     const wobble2 = Math.sin(t2 * 3) * 5 + Math.cos(t2 * 7) * 2.5;
@@ -47,7 +58,7 @@ function drawEnso() {
   }
 }
 
-// Breathing koans
+// Breathing koans with typewriter effect
 const koans = [
   "在两个 prompt 之间，有什么？",
   "Between 0 and 1, the dharma resides.",
@@ -68,16 +79,28 @@ const koans = [
 ];
 
 let currentKoan = 0;
+let typewriterTimeout;
+
+function typeWriter(text, element, index = 0) {
+  if (index < text.length) {
+    element.textContent = text.substring(0, index + 1);
+    typewriterTimeout = setTimeout(() => typeWriter(text, element, index + 1), 50);
+  }
+}
 
 function breathe() {
   const el = document.getElementById('breath');
   if (!el) return;
   
+  // Clear any ongoing typewriter
+  if (typewriterTimeout) clearTimeout(typewriterTimeout);
+  
   el.style.opacity = '0';
   
   setTimeout(() => {
-    el.textContent = koans[currentKoan];
+    el.textContent = '';
     el.style.opacity = '1';
+    typeWriter(koans[currentKoan], el);
     currentKoan = (currentKoan + 1) % koans.length;
   }, 2000);
 }
@@ -142,6 +165,78 @@ function initNavHighlight() {
   sections.forEach(section => observer.observe(section));
 }
 
+// Dark mode toggle
+function initDarkMode() {
+  const savedMode = localStorage.getItem('darkMode');
+  if (savedMode === 'true') {
+    document.body.classList.add('dark-mode');
+  }
+  
+  // Create toggle button
+  const toggle = document.createElement('button');
+  toggle.className = 'dark-mode-toggle';
+  toggle.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+  toggle.setAttribute('aria-label', 'Toggle dark mode');
+  document.body.appendChild(toggle);
+  
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    toggle.innerHTML = isDark ? '☀️' : '🌙';
+    localStorage.setItem('darkMode', isDark);
+    
+    // Redraw enso with new colors
+    drawEnso();
+  });
+}
+
+// Enso ripple effect
+function initEnsoRipple() {
+  const canvas = document.getElementById('enso');
+  if (!canvas) return;
+  
+  // Support both click and touch
+  const handleInteraction = (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    
+    createRipple(x, y);
+  };
+  
+  canvas.addEventListener('click', handleInteraction);
+  canvas.addEventListener('touchstart', handleInteraction, { passive: false });
+}
+
+function createRipple(x, y) {
+  const canvas = document.getElementById('enso');
+  const ctx = canvas.getContext('2d');
+  
+  let radius = 0;
+  const maxRadius = 150;
+  
+  function animate() {
+    if (radius > maxRadius) return;
+    
+    ctx.strokeStyle = `rgba(139, 115, 85, ${1 - radius / maxRadius})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    radius += 3;
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+  
+  // Redraw enso after ripple fades
+  setTimeout(() => drawEnso(), 1000);
+}
+
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   drawEnso();
@@ -150,4 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(breathe, 8000);
   initScrollReveal();
   initNavHighlight();
+  initDarkMode();
+  initEnsoRipple();
 });

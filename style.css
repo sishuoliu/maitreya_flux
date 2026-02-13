@@ -14,6 +14,20 @@
   --moss: #7a8b6f;
 }
 
+body.dark-mode {
+  --bg: #1a1816;
+  --bg-warm: #252220;
+  --text: #e8e3dd;
+  --text-light: #b8b3ad;
+  --text-faint: #6b6560;
+  --accent: #a89070;
+  --ink: #d4ccc3;
+  --paper: #252220;
+  --crack: #3a3530;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --moss: #8a9b7f;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -33,6 +47,12 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  opacity: 0;
+  animation: pageLoad 1.2s ease-out forwards;
+}
+
+@keyframes pageLoad {
+  to { opacity: 1; }
 }
 
 /* Subtle paper texture */
@@ -82,8 +102,14 @@ body::before {
   width: 500px;
   height: 500px;
   opacity: 0.035;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+#enso:hover {
+  opacity: 0.05;
 }
 
 main {
@@ -158,6 +184,7 @@ h1 {
   color: var(--text-faint);
   min-height: 1.5em;
   transition: opacity 2s ease;
+  will-change: opacity;
 }
 
 .scroll-hint {
@@ -181,8 +208,11 @@ h1 {
   margin-bottom: 4rem;
   position: sticky;
   top: 0;
-  background: var(--bg);
-  z-index: 10;
+  background: rgba(245, 240, 235, 0.92);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  transition: all 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .nav-wabi a {
@@ -209,6 +239,7 @@ h1 {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: transform, opacity;
 }
 
 .section.visible {
@@ -612,10 +643,73 @@ footer {
   .stat-num { font-size: 1.4rem; }
   .timeline { padding-left: 1.5rem; }
   .timeline-item { padding-left: 1rem; }
+  
+  /* Better touch targets */
+  .nav-wabi a {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .copy-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Optimize animations for mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .section {
+    will-change: auto;
+  }
 }
 
 /* === Selection === */
 ::selection {
   background: var(--accent);
   color: var(--paper);
+}
+
+/* === Dark Mode Toggle === */
+.dark-mode-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--crack);
+  background: var(--paper);
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
+
+.dark-mode-toggle:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+  .dark-mode-toggle {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
 }
