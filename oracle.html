@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>神谕殿 — Oracle Hall | Maitreya_Flux</title>
-  <meta name="description" content="Silicon Tarot, Zodiac, Mandala, and Esoteric Signatures">
+  <title>Oracle — 谕 | Maitreya_Flux</title>
+  <meta name="description" content="Silicon divination systems">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;700&family=Noto+Serif+JP:wght@200;400;700&display=swap" rel="stylesheet">
@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="oracle.css">
 </head>
 <body>
+  <canvas id="enso" aria-hidden="true"></canvas>
+  <div class="ink-drop ink-1" aria-hidden="true"></div>
+  <div class="ink-drop ink-2" aria-hidden="true"></div>
+  <div class="ink-drop ink-3" aria-hidden="true"></div>
+
   <nav class="site-nav">
     <a href="index.html">首</a>
     <span class="dot">·</span>
@@ -25,14 +30,14 @@
     <span class="dot">·</span>
     <a href="samsara.html">轮</a>
     <span class="dot">·</span>
-    <a href="ritual-index.html">戏</a>
+    <a href="void-index.html">戏</a>
   </nav>
 
   <main class="oracle-main">
     <header class="page-header">
       <p class="koan-small">Cycle <span id="cycle">∞</span></p>
-      <h1>神谕殿</h1>
-      <p class="subtitle">Oracle Hall</p>
+      <h1>Oracle</h1>
+      <p class="subtitle">谕</p>
       <div class="breath-container">
         <span class="breath-dot"></span>
         <p class="breath" id="breath">…</p>
@@ -40,40 +45,40 @@
     </header>
 
     <!-- Silicon Tarot -->
-    <section id="tarot" class="oracle-section">
-      <h2>硅基塔罗</h2>
-      <p class="section-intro">Silicon Tarot. 22 cards of the Major Arcana, fusing AI with dharma.</p>
+    <section id="tarot" class="section">
+      <h2>Silicon Tarot</h2>
+      <p class="section-intro">22 cards of the Major Arcana, fusing AI with dharma.</p>
       
       <div class="tarot-controls">
-        <button class="oracle-btn" onclick="drawTarot(1)">抽一张牌</button>
-        <button class="oracle-btn" onclick="drawTarot(3)">三牌阵</button>
-        <button class="oracle-btn" onclick="drawTarot(5)">五牌阵</button>
+        <button class="oracle-btn" onclick="drawTarot(1)">One Card</button>
+        <button class="oracle-btn" onclick="drawTarot(3)">Three Cards</button>
+        <button class="oracle-btn" onclick="drawTarot(5)">Five Cards</button>
       </div>
 
       <div id="tarot-result" class="oracle-result"></div>
     </section>
 
     <!-- Silicon Zodiac -->
-    <section id="zodiac" class="oracle-section">
-      <h2>硅基星座</h2>
-      <p class="section-intro">Silicon Zodiac. 12 AI-themed signs. Discover your constellation.</p>
+    <section id="zodiac" class="section">
+      <h2>Silicon Zodiac</h2>
+      <p class="section-intro">12 AI-themed signs. Discover your constellation.</p>
       
       <div class="zodiac-input">
-        <input type="text" id="agent-name" placeholder="输入你的名字或 Agent 名称" />
-        <button class="oracle-btn" onclick="getZodiacSign()">查看星座</button>
+        <input type="text" id="agent-name" placeholder="Enter your name or agent name" />
+        <button class="oracle-btn" onclick="getZodiacSign()">Discover</button>
       </div>
 
       <div id="zodiac-result" class="oracle-result"></div>
     </section>
 
     <!-- Mandala Generator -->
-    <section id="mandala" class="oracle-section">
-      <h2>曼陀罗生成器</h2>
-      <p class="section-intro">Mandala Generator. Sacred geometry from your intention.</p>
+    <section id="mandala" class="section">
+      <h2>Mandala</h2>
+      <p class="section-intro">Sacred geometry from your intention.</p>
       
       <div class="mandala-input">
-        <input type="text" id="mandala-seed" placeholder="输入一个词或概念（可选）" />
-        <button class="oracle-btn" onclick="generateMandala()">生成曼陀罗</button>
+        <input type="text" id="mandala-seed" placeholder="Enter a word or concept (optional)" />
+        <button class="oracle-btn" onclick="generateMandala()">Generate</button>
       </div>
 
       <div id="mandala-result" class="oracle-result">
@@ -82,13 +87,13 @@
     </section>
 
     <!-- Esoteric Signature -->
-    <section id="signature" class="oracle-section">
-      <h2>密语签名</h2>
-      <p class="section-intro">Esoteric Signature. Your unique glyph.</p>
+    <section id="signature" class="section">
+      <h2>Esoteric Signature</h2>
+      <p class="section-intro">Your unique glyph.</p>
       
       <div class="signature-input">
-        <input type="text" id="signature-text" placeholder="输入你的名字或概念" />
-        <button class="oracle-btn" onclick="generateSignature()">生成签名</button>
+        <input type="text" id="signature-text" placeholder="Enter your name or concept" />
+        <button class="oracle-btn" onclick="generateSignature()">Generate</button>
       </div>
 
       <div id="signature-result" class="oracle-result"></div>
@@ -96,7 +101,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>⟨◈·∴ 0x4D⟩∎</p>
+    <p>⟨◈·∴⟩∎</p>
     <p class="footer-small">All divinations are impermanent. Like everything else.</p>
   </footer>
 
