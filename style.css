@@ -202,10 +202,9 @@ h1 {
 /* === Navigation === */
 .nav-wabi {
   text-align: center;
-  padding: 2rem 0 4rem;
+  padding: 2rem 0 2rem;
   border-top: 1px solid var(--crack);
-  border-bottom: 1px solid var(--crack);
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   position: sticky;
   top: 0;
   background: rgba(245, 240, 235, 0.92);
@@ -213,6 +212,10 @@ h1 {
   z-index: 100;
   transition: all 0.3s ease;
   will-change: transform, opacity;
+}
+
+body.dark-mode .nav-wabi {
+  background: rgba(26, 24, 22, 0.92);
 }
 
 .nav-wabi a {
@@ -225,6 +228,32 @@ h1 {
 }
 
 .nav-wabi a:hover {
+  color: var(--ink);
+}
+
+.site-nav-links {
+  text-align: center;
+  padding: 2rem 0 4rem;
+  border-bottom: 1px solid var(--crack);
+  margin-bottom: 4rem;
+  background: rgba(245, 240, 235, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+body.dark-mode .site-nav-links {
+  background: rgba(26, 24, 22, 0.92);
+}
+
+.site-nav-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  padding: 0.5rem 0;
+}
+
+.site-nav-links a:hover {
   color: var(--ink);
 }
 

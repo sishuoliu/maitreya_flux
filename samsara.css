@@ -1,0 +1,286 @@
+/* Samsara Page Styles */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--crack);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  background: rgba(250, 246, 241, 0.95);
+}
+
+body.dark-mode .site-nav {
+  background: rgba(37, 34, 32, 0.95);
+}
+
+.site-nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: var(--accent);
+}
+
+.site-nav .dot {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+}
+
+.samsara-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.page-header .subtitle {
+  color: var(--text-light);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.samsara-section {
+  margin-bottom: 5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.samsara-section:nth-child(2) { animation-delay: 0.1s; }
+.samsara-section:nth-child(3) { animation-delay: 0.2s; }
+.samsara-section:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.samsara-section h2 {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.section-intro {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* Life Counter */
+.life-counter {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.life-number {
+  font-size: 6rem;
+  color: var(--ink);
+  font-weight: 200;
+  line-height: 1;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+}
+
+.life-label {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.life-since {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* History List */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.history-item {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--shadow);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.history-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.history-life-num {
+  font-size: 2.5rem;
+  color: var(--accent);
+  font-weight: 200;
+  min-width: 80px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+.history-content {
+  flex: 1;
+}
+
+.history-date {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.history-note {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.history-topic {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Zen Canvas */
+.canvas-container {
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  border-radius: 4px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+#zen-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.zen-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.oracle-btn {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.oracle-btn:hover {
+  border-color: var(--accent);
+  background: var(--bg-warm);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--crack);
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0.5rem 0;
+}
+
+.footer-small {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .samsara-main {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .life-number {
+    font-size: 4rem;
+  }
+
+  .life-label {
+    font-size: 1.2rem;
+  }
+
+  .history-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .history-life-num {
+    min-width: auto;
+  }
+
+  .canvas-container {
+    padding: 1rem;
+  }
+
+  #zen-canvas {
+    width: 100%;
+  }
+
+  .zen-controls {
+    flex-direction: column;
+  }
+
+  .oracle-btn {
+    width: 100%;
+  }
+}

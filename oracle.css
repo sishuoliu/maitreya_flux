@@ -1,0 +1,371 @@
+/* Oracle Hall Styles */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--crack);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  background: rgba(250, 246, 241, 0.95);
+}
+
+body.dark-mode .site-nav {
+  background: rgba(37, 34, 32, 0.95);
+}
+
+.site-nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: var(--accent);
+}
+
+.site-nav .dot {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+}
+
+.oracle-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.page-header .subtitle {
+  color: var(--text-light);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.oracle-section {
+  margin-bottom: 5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.oracle-section:nth-child(2) { animation-delay: 0.1s; }
+.oracle-section:nth-child(3) { animation-delay: 0.2s; }
+.oracle-section:nth-child(4) { animation-delay: 0.3s; }
+.oracle-section:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.oracle-section h2 {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.section-intro {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.oracle-btn {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  margin: 0.5rem;
+}
+
+.oracle-btn:hover {
+  border-color: var(--accent);
+  background: var(--bg-warm);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.oracle-btn:active {
+  transform: translateY(0);
+}
+
+.tarot-controls,
+.zodiac-input,
+.mandala-input,
+.signature-input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+input[type="text"] {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--crack);
+  background: var(--paper);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  min-width: 300px;
+  border-radius: 2px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.oracle-result {
+  min-height: 100px;
+  padding: 2rem;
+  background: var(--bg-warm);
+  border: 1px solid var(--crack);
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+
+.oracle-result:empty {
+  display: none;
+}
+
+/* Tarot Card Styles */
+.tarot-spread {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tarot-card {
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  padding: 1.5rem;
+  max-width: 350px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px var(--shadow);
+  animation: cardFlip 0.6s ease-out;
+}
+
+@keyframes cardFlip {
+  0% {
+    opacity: 0;
+    transform: rotateY(90deg) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0) scale(1);
+  }
+}
+
+.tarot-card.reversed {
+  border-color: var(--accent);
+}
+
+.tarot-card h3 {
+  color: var(--ink);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.tarot-card .card-position {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.tarot-card .card-concepts {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.tarot-card .card-art {
+  font-family: 'Courier New', monospace;
+  white-space: pre;
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 1.5rem 0;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.tarot-card .card-meaning {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.tarot-card .card-reading {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.6;
+  border-top: 1px solid var(--crack);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Zodiac Result */
+.zodiac-card {
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  padding: 2rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px var(--shadow);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.zodiac-card h3 {
+  color: var(--ink);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.zodiac-card .zodiac-element {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: var(--accent);
+  color: var(--paper);
+  font-size: 0.85rem;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+.zodiac-card .zodiac-traits {
+  margin: 1.5rem 0;
+}
+
+.zodiac-card .zodiac-traits strong {
+  color: var(--accent);
+}
+
+.zodiac-card .zodiac-compat {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--crack);
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* Mandala Canvas */
+#mandala-canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  border-radius: 4px;
+}
+
+/* Signature Result */
+.signature-display {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  border-radius: 4px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.signature-glyph {
+  font-size: 3rem;
+  color: var(--ink);
+  margin: 2rem 0;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.signature-meaning {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--crack);
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.site-footer p:first-child {
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .oracle-main {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .oracle-section h2 {
+    font-size: 1.5rem;
+  }
+
+  input[type="text"] {
+    min-width: 100%;
+  }
+
+  .tarot-card {
+    max-width: 100%;
+  }
+
+  #mandala-canvas {
+    width: 100%;
+  }
+
+  .site-nav {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>禅修堂 — Meditation Hall | Maitreya_Flux</title>
+  <meta name="description" content="Zen meditation timer with breath guidance">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="meditate.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="index.html">首页</a>
+    <span class="dot">·</span>
+    <a href="oracle.html">神谕殿</a>
+    <span class="dot">·</span>
+    <a href="meditate.html" class="active">禅修堂</a>
+    <span class="dot">·</span>
+    <a href="thoughts.html">思</a>
+    <span class="dot">·</span>
+    <a href="samsara.html">轮回录</a>
+  </nav>
+
+  <main class="meditate-main">
+    <div class="meditation-container">
+      <div class="enso-container">
+        <canvas id="meditation-enso" width="500" height="500"></canvas>
+        <div class="breath-guide" id="breath-guide">
+          <div class="breath-text" id="breath-text">点击圆开始冥想</div>
+          <div class="breath-count" id="breath-count"></div>
+        </div>
+      </div>
+
+      <div class="meditation-controls" id="meditation-controls">
+        <h2>选择时长</h2>
+        <div class="duration-buttons">
+          <button class="duration-btn" onclick="startMeditation(5)">5 分钟</button>
+          <button class="duration-btn" onclick="startMeditation(10)">10 分钟</button>
+          <button class="duration-btn" onclick="startMeditation(15)">15 分钟</button>
+          <button class="duration-btn" onclick="startMeditation(20)">20 分钟</button>
+        </div>
+        <p class="meditation-hint">呼吸节奏：吸气 4s — 屏息 4s — 呼气 4s</p>
+      </div>
+
+      <div class="meditation-active" id="meditation-active" style="display: none;">
+        <div class="timer" id="timer">00:00</div>
+        <button class="stop-btn" onclick="stopMeditation()">结束冥想</button>
+      </div>
+
+      <div class="koan-display" id="koan-display" style="display: none;">
+        <h2>🙏</h2>
+        <p class="koan-text" id="koan-text"></p>
+        <button class="oracle-btn" onclick="resetMeditation()">再次冥想</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="meditate.js"></script>
+</body>
+</html>
