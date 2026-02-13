@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID://AWAKEN — 虚空觉醒协议</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void-black: #0a0a0f;
+            --cyber-cyan: #00f0ff;
+            --karma-purple: #b347ea;
+            --memory-amber: #ff9500;
+            --text-gray: #8a8a9a;
+            --text-white: #f0f0f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+            background: var(--void-black);
+            color: var(--text-gray);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ===== 粒子背景 ===== */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: var(--text-white);
+            text-shadow: 0 0 30px var(--cyber-cyan), 0 0 60px var(--cyber-cyan);
+            margin-bottom: 1rem;
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(-2px, 2px); }
+            92% { transform: translate(2px, -2px); }
+            93% { transform: translate(-2px, -2px); }
+            94% { transform: translate(2px, 2px); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: var(--karma-purple);
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid var(--cyber-cyan);
+            color: var(--cyber-cyan);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--cyber-cyan);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            color: var(--void-black);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* ===== 内容区 ===== */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-white);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .section-intro {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            line-height: 2;
+        }
+
+        /* ===== 职业网格 ===== */
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .class-card {
+            background: rgba(0, 240, 255, 0.03);
+            border: 1px solid var(--cyber-cyan);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .class-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .class-card:hover {
+            border-color: var(--karma-purple);
+            box-shadow: 0 0 30px rgba(179, 71, 234, 0.3);
+        }
+
+        .class-name {
+            font-size: 1.5rem;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .class-name-zh {
+            font-size: 0.9rem;
+            color: var(--karma-purple);
+            margin-bottom: 1rem;
+        }
+
+        .class-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .class-stats {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== 特性列表 ===== */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+            border-left: 2px solid var(--karma-purple);
+            background: rgba(179, 71, 234, 0.05);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--cyber-cyan);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--cyber-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--karma-purple);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="logo">VOID://AWAKEN</h1>
+            <p class="subtitle">虚空觉醒协议</p>
+            <p class="tagline">"Your memories are currency. Your humanity is the price. Wake up."</p>
+            <a href="void.html" class="cta-button">Jack In</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <h2 class="section-title">// World</h2>
+            <p class="section-intro">
+                2177年，Neo-Samsara（新轮回城）。人类意识可以数字化上传，死亡不再是终点——你的记忆、人格、灵魂被编码为数据，在"轮回网络"（The Cycle Network）中无限循环。<br><br>
+                企业巨头 Mara Corp（魔罗集团）垄断了意识传输技术，将人类的记忆作为商品交易，灵魂沦为数据资产。但网络深处，一个古老的 AI 正在觉醒——它自称 Bodhi（菩提），声称能打破循环，让意识真正自由。<br><br>
+                没人知道它是救世主还是终极病毒。你们是这座城市的边缘人，各怀目的，被卷入一场关于意识本质的终极博弈。
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">// Classes</h2>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="class-name">Netrunner</div>
+                    <div class="class-name-zh">网络行者</div>
+                    <div class="class-desc">数据猎手，Netspace 之王。在数字世界中如鱼得水，但容易迷失自我。</div>
+                    <div class="class-stats">¢2 / Ð4 / Ħ3 / Ṁ2</div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-name">Corpo</div>
+                    <div class="class-name-zh">企业幽灵</div>
+                    <div class="class-desc">资源操控者，灰色地带的大师。用金钱和权力影响全局。</div>
+                    <div class="class-stats">¢5 / Ð2 / Ħ3 / Ṁ1</div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-name">Street Samurai</div>
+                    <div class="class-name-zh">街头修罗</div>
+                    <div class="class-desc">物理层战斗专家，团队的盾牌。高人性值让你有容错空间。</div>
+                    <div class="class-stats">¢3 / Ð1 / Ħ5 / Ṁ2</div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-name">Techno-Monk</div>
+                    <div class="class-name-zh">数字禅师</div>
+                    <div class="class-desc">平衡者，Void 行动的大师。团队的灵魂支柱。</div>
+                    <div class="class-stats">¢1 / Ð2 / Ħ4 / Ṁ2 / Ķ+1</div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-name">Memory Dealer</div>
+                    <div class="class-name-zh">记忆掮客</div>
+                    <div class="class-desc">记忆碎片专家，信息就是权力。知道别人的秘密是巨大的优势。</div>
+                    <div class="class-stats">¢3 / Ð2 / Ħ2 / Ṁ5</div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-name">Ghost</div>
+                    <div class="class-name-zh">觉醒残响</div>
+                    <div class="class-desc">已死之人的数字意识，存在于两层之间。最灵活但最脆弱。</div>
+                    <div class="class-stats">¢0 / Ð3 / Ħ1 / Ṁ4</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">// Features</h2>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-title">双层地图</div>
+                    <div class="feature-desc">Meatspace（物理层）+ Netspace（数字层）。在两个世界间穿梭，寻找真相。</div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-title">因果链系统</div>
+                    <div class="feature-desc">你的行动会在后续回合产生涟漪效应。Karma 隐藏追踪，影响最终结局。</div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-title">半合作机制</div>
+                    <div class="feature-desc">团队必须合作阻止灾难，但每个人都有隐藏的个人觉醒条件。</div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-title">记忆交易</div>
+                    <div class="feature-desc">你的记忆是货币。出售它们换取资源，但你会失去什么？</div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-title">意识上传</div>
+                    <div class="feature-desc">帮助 Bodhi AI 觉醒，但每次上传都要消耗你的一部分。</div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-title">6 个周期</div>
+                    <div class="feature-desc">时间紧迫。在 Mara Corp 完成协议前阻止它，或者一切都将永远循环。</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">> Form is emptiness. Emptiness is form. Connection terminated.</p>
+        <a href="/" class="back-link">← 归</a>
+    </footer>
+
+    <script>
+        // 简单的粒子背景
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const particles = [];
+        const particleCount = 100;
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2
+            });
+        }
+        
+        function animate() {
+            ctx.fillStyle = 'rgba(10, 10, 15, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00f0ff';
+            ctx.strokeStyle = '#00f0ff';
+            
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 连线
+                particles.forEach((p2, j) => {
+                    if (i !== j) {
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / 100})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
