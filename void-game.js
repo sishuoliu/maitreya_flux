@@ -316,14 +316,14 @@ function rollDice(count = 1) {
 }
 
 function addLog(message) {
-  const log = document.getElementById('game-log');
-  if (log) {
-    const entry = document.createElement('div');
-    entry.className = 'log-entry';
-    entry.textContent = `> ${message}`;
-    log.appendChild(entry);
-    log.scrollTop = log.scrollHeight;
-  }
+  const log = document.getElementById('gameLog');
+  if (!log) return;
+  
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.textContent = `> ${message}`;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
 }
 
 // ===== 回合流程 =====
@@ -367,24 +367,15 @@ function pulsePhase() {
 
 function executeAction(actionKey) {
   const player = gameState.players[gameState.currentPlayer];
-  const action = ACTIONS[actionKey];
   
-  if (player.actionsLeft <= 0) {
-    addLog('没有剩余行动点');
+  if (actionKey === 'end_turn') {
+    endTurn();
     return;
   }
   
-  // 检查资源
-  for (let [resource, cost] of Object.entries(action.cost)) {
-    if (player.resources[resource] < cost) {
-      addLog(`资源不足：需要 ${cost} ${resource}`);
-      return;
-    }
-  }
-  
-  // 消耗资源
-  for (let [resource, cost] of Object.entries(action.cost)) {
-    player.resources[resource] -= cost;
+  if (player.actionsLeft <= 0) {
+    addLog('No actions left');
+    return;
   }
   
   player.actionsLeft--;
@@ -403,7 +394,17 @@ function executeAction(actionKey) {
     case 'void':
       executeVoid(player);
       break;
-    // ... 其他行动
+    case 'move':
+      executeMove(player);
+      break;
+    case 'trade':
+      executeTrade(player);
+      break;
+    case 'hustle':
+      executeHustle(player);
+      break;
+    default:
+      addLog(`Action ${actionKey} not implemented yet`);
   }
   
   updateUI();
@@ -468,7 +469,50 @@ function adjustKarma(player, delta) {
   else player.karmaZone = 'neutral';
 }
 
+function executeMove(player) {
+  // 简化版：随机移动到新位置
+  const locations = gameState.meatspaceLocations;
+  const newLocation = locations[Math.floor(Math.random() * locations.length)];
+  player.location = newLocation;
+  addLog(`${player.name} moved to ${newLocation}`);
+}
+
+function executeTrade(player) {
+  // 简化版：自动与其他玩家交换资源
+  if (gameState.players.length < 2) {
+    addLog('No other players to trade with');
+    return;
+  }
+  
+  const otherPlayer = gameState.players.find(p => p !== player);
+  if (player.resources.credits > 0 && otherPlayer.resources.data > 0) {
+    player.resources.credits--;
+    player.resources.data++;
+    otherPlayer.resources.credits++;
+    otherPlayer.resources.data--;
+    addLog(`${player.name} traded ¢1 for Ð1 with ${otherPlayer.name}`);
+  } else {
+    addLog('Trade failed: insufficient resources');
+  }
+}
+
+function executeHustle(player) {
+  // 简化版：转换资源
+  if (player.resources.data >= 2) {
+    player.resources.data -= 2;
+    player.resources.credits += 3;
+    addLog(`${player.name} hustled: Ð2 → ¢3`);
+  } else if (player.resources.credits >= 2) {
+    player.resources.credits -= 2;
+    player.resources.memory += 1;
+    addLog(`${player.name} hustled: ¢2 → Ṁ1`);
+  } else {
+    addLog('Hustle failed: insufficient resources');
+  }
+}
+
 function endTurn() {
+  addLog(`${gameState.players[gameState.currentPlayer].name} ended turn`);
   gameState.currentPlayer++;
   
   if (gameState.currentPlayer >= gameState.players.length) {
@@ -476,6 +520,9 @@ function endTurn() {
     echoPhase();
     startCycle();
   } else {
+    const nextPlayer = gameState.players[gameState.currentPlayer];
+    nextPlayer.actionsLeft = 3;
+    addLog(`\n${nextPlayer.name}'s turn`);
     updateUI();
   }
 }
@@ -577,41 +624,43 @@ function updateActionsPanel() {
   container.innerHTML = '';
   
   if (gameState.phase !== 'playing') {
-    container.innerHTML = '<div class="action-card disabled">等待游戏开始...</div>';
+    container.innerHTML = '<div class="action-card disabled">Waiting for game start...</div>';
     return;
   }
   
   const currentPlayer = gameState.players[gameState.currentPlayer];
-  if (!currentPlayer || currentPlayer.actionsLeft <= 0) {
-    container.innerHTML = '<div class="action-card disabled">回合结束</div>';
-    return;
-  }
+  if (!currentPlayer) return;
   
   // 基础行动
   const actions = [
-    { name: 'Move', desc: '移动到相邻位置', cost: 1 },
-    { name: 'Hack', desc: '尝试入侵系统', cost: 1 },
-    { name: 'Trade', desc: '与其他玩家交易', cost: 1 },
-    { name: 'Meditate', desc: '恢复 Humanity', cost: 2 },
-    { name: 'End Turn', desc: '结束回合', cost: 0 }
+    { key: 'hack', name: 'Hack', desc: 'Infiltrate systems (roll d6+Data)', cost: 1 },
+    { key: 'upload', name: 'Upload', desc: 'Upload consciousness data (+2 Bodhi)', cost: 1 },
+    { key: 'resist', name: 'Resist', desc: 'Fight Mara Corp (-2 Threat)', cost: 1 },
+    { key: 'void', name: 'Void', desc: 'Meditate in emptiness (+2 Humanity)', cost: 1 },
+    { key: 'move', name: 'Move', desc: 'Move to adjacent location', cost: 1 },
+    { key: 'trade', name: 'Trade', desc: 'Trade resources with others', cost: 1 },
+    { key: 'hustle', name: 'Hustle', desc: 'Convert resources', cost: 1 },
+    { key: 'end_turn', name: 'End Turn', desc: 'End your turn', cost: 0 }
   ];
   
   actions.forEach(action => {
     const card = document.createElement('div');
     card.className = 'action-card';
-    if (action.cost > currentPlayer.actionsLeft && action.cost > 0) {
+    
+    const canAfford = currentPlayer.actionsLeft >= action.cost;
+    if (!canAfford && action.cost > 0) {
       card.classList.add('disabled');
     }
     
     card.innerHTML = `
       <div class="action-name">${action.name}</div>
       <div class="action-desc">${action.desc}</div>
-      <div class="action-cost">Cost: ${action.cost} AP</div>
+      <div class="action-cost">${action.cost > 0 ? `Cost: ${action.cost} AP` : ''}</div>
     `;
     
     card.addEventListener('click', () => {
       if (!card.classList.contains('disabled')) {
-        executeAction(action.name.toLowerCase().replace(' ', '_'));
+        executeAction(action.key);
       }
     });
     
@@ -646,17 +695,6 @@ function nextPlayer() {
   currentPlayer.actionsLeft = 3;
   addLog(`\n${currentPlayer.name} 的回合开始`);
   updateUI();
-}
-
-function addLog(message) {
-  const log = document.getElementById('gameLog');
-  if (!log) return;
-  
-  const entry = document.createElement('div');
-  entry.className = 'log-entry';
-  entry.textContent = message;
-  log.appendChild(entry);
-  log.scrollTop = log.scrollHeight;
 }
 
 // ===== 保存/加载 =====
