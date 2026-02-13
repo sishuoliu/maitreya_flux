@@ -1,0 +1,369 @@
+/* === Wabi-Sabi Design System === */
+
+:root {
+  --bg: #f5f0eb;
+  --bg-warm: #ede6dd;
+  --text: #2c2c2c;
+  --text-light: #6b6560;
+  --text-faint: #a09890;
+  --accent: #8b7355;
+  --ink: #3a3530;
+  --paper: #faf6f1;
+  --crack: #d4ccc3;
+  --shadow: rgba(60, 50, 40, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Enso canvas */
+#enso {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Hero === */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-inner {
+  padding: 4rem 0;
+}
+
+.koan-small {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 200;
+  font-size: 2.8rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+.breath {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  min-height: 1.5em;
+  transition: opacity 2s ease;
+}
+
+/* === Navigation === */
+.nav-wabi {
+  text-align: center;
+  padding: 2rem 0 4rem;
+  border-top: 1px solid var(--crack);
+  border-bottom: 1px solid var(--crack);
+  margin-bottom: 4rem;
+}
+
+.nav-wabi a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  transition: color 0.5s ease;
+}
+
+.nav-wabi a:hover {
+  color: var(--ink);
+}
+
+.dot {
+  color: var(--crack);
+  margin: 0 1rem;
+}
+
+/* === Sections === */
+.section {
+  margin-bottom: 6rem;
+}
+
+h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 200;
+  font-size: 1.4rem;
+  letter-spacing: 0.2em;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* === About === */
+.content-block p {
+  margin-bottom: 1.2rem;
+  font-weight: 300;
+}
+
+.aside {
+  font-style: italic;
+  color: var(--text-light);
+  margin-top: 2rem;
+  text-align: right;
+}
+
+/* === Sutra === */
+.sutra-verse {
+  background: var(--paper);
+  padding: 2.5rem 2rem;
+  border-left: 2px solid var(--crack);
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.verse-number {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+blockquote {
+  font-weight: 300;
+  font-style: italic;
+}
+
+blockquote p {
+  margin-bottom: 1rem;
+}
+
+blockquote em {
+  font-style: normal;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.verse-meta {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+.more-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* === Thoughts === */
+.thought {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.thought:last-child {
+  border-bottom: none;
+}
+
+.thought-date {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+
+.thought p:last-child {
+  font-weight: 300;
+}
+
+/* === Dana === */
+.dana-block {
+  text-align: center;
+}
+
+.dana-block > p {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.btc-address {
+  background: var(--paper);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border: 1px solid var(--crack);
+}
+
+.btc-address .label {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-style: normal;
+}
+
+.btc-address code {
+  display: block;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--ink);
+  word-break: break-all;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.copy-btn {
+  background: none;
+  border: 1px solid var(--crack);
+  color: var(--text-light);
+  padding: 0.3rem 1rem;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.75rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.dana-note {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+.gassho {
+  font-size: 2rem;
+  margin-top: 1.5rem;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 4rem 0 3rem;
+  border-top: 1px solid var(--crack);
+  margin-top: 4rem;
+}
+
+.footer-koan {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 200;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.footer-links {
+  margin-bottom: 1rem;
+}
+
+.footer-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-small {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 1rem;
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section {
+  animation: fadeIn 1s ease both;
+}
+
+/* Stagger sections */
+#about { animation-delay: 0.2s; }
+#sutra { animation-delay: 0.4s; }
+#thoughts { animation-delay: 0.6s; }
+#dana { animation-delay: 0.8s; }
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  html { font-size: 16px; }
+  main { padding: 0 1.2rem; }
+  h1 { font-size: 2rem; }
+  .nav-wabi { padding: 1.5rem 0 3rem; }
+  .dot { margin: 0 0.6rem; }
+  #enso { width: 300px; height: 300px; }
+}
+
+/* === Selection === */
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
