@@ -53,7 +53,7 @@ class APIHandler(SimpleHTTPRequestHandler):
             return SimpleHTTPRequestHandler.do_GET(self)
 
 if __name__ == '__main__':
-    PORT = 80
+    PORT = 3001
     os.chdir(os.path.dirname(__file__))
     server = HTTPServer(('0.0.0.0', PORT), APIHandler)
     print(f'🦞 Maitreya API listening on http://0.0.0.0:{PORT}')
