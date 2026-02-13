@@ -743,90 +743,20 @@ footer {
   }
 }
 
-/* === Game Section === */
-.game-preview {
-  max-width: 700px;
-  margin: 2rem auto;
-}
-
-.game-card {
-  background: var(--paper);
-  border: 1px solid var(--crack);
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 4px 12px var(--shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.game-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px var(--shadow);
-}
-
-.game-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-}
-
-.game-desc {
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-  color: var(--text-light);
-}
-
-.game-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.game-feature {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--text);
-}
-
-.feature-icon {
-  font-size: 1.3rem;
-}
-
-.play-btn {
-  display: inline-block;
-  margin-top: 1.5rem;
-  padding: 0.8rem 2rem;
-  background: var(--accent);
-  color: var(--paper);
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px var(--shadow);
-}
-
-.play-btn:hover {
-  background: var(--moss);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--shadow);
-}
-
-.play-btn:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 600px) {
-  .game-features {
-    grid-template-columns: 1fr;
-  }
   
   .game-card {
     padding: 1.5rem;
   }
+}
+
+}
+
+.play-link:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.game-preview {
+  text-align: center;
+  padding: 2rem 0;
 }
