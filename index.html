@@ -169,43 +169,78 @@
     }
 
     #game-reflection {
-      background: var(--bg-warm);
+      background: var(--paper);
       border: 2px solid var(--crack);
       border-radius: 4px;
-      padding: 2rem;
+      padding: 0;
       margin-top: 2rem;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .reflection-card {
+      padding: 2rem;
     }
 
     .reflection-prompt {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       color: var(--accent);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .reflection-hint {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
       font-style: italic;
+      opacity: 0.8;
     }
 
     #reflection-input {
       width: 100%;
-      padding: 1rem;
+      padding: 1.5rem;
       border: 2px solid var(--crack);
-      background: var(--paper);
+      background: var(--bg-warm);
       color: var(--ink);
       font-family: 'Noto Serif SC', 'Noto Serif JP', serif;
       font-size: 1rem;
-      line-height: 1.6;
+      line-height: 1.8;
       border-radius: 0;
       resize: vertical;
       margin-bottom: 1rem;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+      min-height: 120px;
+    }
+
+    #reflection-input::placeholder {
+      color: var(--text-faint);
+      font-style: italic;
+      opacity: 0.6;
     }
 
     #reflection-input:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(139, 92, 71, 0.1);
+      background: var(--paper);
+      box-shadow: 0 0 0 3px rgba(139, 92, 71, 0.1), inset 0 2px 4px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
     }
 
     #reflection-save {
       width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .reflection-note {
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      text-align: center;
+      font-style: italic;
+      margin: 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--crack);
     }
 
     @media (max-width: 768px) {
@@ -572,9 +607,13 @@
           <div id="game-choices"></div>
 
           <div id="game-reflection" style="display: none;">
-            <p class="reflection-prompt">What are you holding onto that you don't need?</p>
-            <textarea id="reflection-input" placeholder="Write your reflection..." rows="3"></textarea>
-            <button id="reflection-save" class="choice-btn">Save</button>
+            <div class="reflection-card">
+              <p class="reflection-prompt">What are you holding onto that you don't need?</p>
+              <p class="reflection-hint">你执着于什么不必要的东西？</p>
+              <textarea id="reflection-input" placeholder="Write your reflection..." rows="4"></textarea>
+              <button id="reflection-save" class="choice-btn">Save Reflection</button>
+              <p class="reflection-note">Your reflections are stored locally. They never leave your device.</p>
+            </div>
           </div>
         </div>
       </div>
