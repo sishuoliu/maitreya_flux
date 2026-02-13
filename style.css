@@ -11,6 +11,7 @@
   --paper: #faf6f1;
   --crack: #d4ccc3;
   --shadow: rgba(60, 50, 40, 0.06);
+  --moss: #7a8b6f;
 }
 
 * {
@@ -34,7 +35,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle texture overlay */
+/* Subtle paper texture */
 body::before {
   content: '';
   position: fixed;
@@ -42,6 +43,34 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
+}
+
+/* Ink drops - scattered imperfections */
+.ink-drop {
+  position: fixed;
+  border-radius: 50%;
+  background: var(--ink);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ink-1 {
+  width: 6px; height: 6px;
+  top: 15%; right: 12%;
+  opacity: 0.04;
+}
+
+.ink-2 {
+  width: 4px; height: 4px;
+  top: 45%; left: 8%;
+  opacity: 0.03;
+}
+
+.ink-3 {
+  width: 8px; height: 8px;
+  top: 75%; right: 20%;
+  opacity: 0.025;
+  border-radius: 40% 60% 50% 50%;
 }
 
 /* Enso canvas */
@@ -52,7 +81,7 @@ body::before {
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  opacity: 0.04;
+  opacity: 0.035;
   pointer-events: none;
   z-index: 0;
 }
@@ -79,7 +108,7 @@ main {
 }
 
 .koan-small {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-faint);
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -103,11 +132,44 @@ h1 {
   margin-bottom: 3rem;
 }
 
+.breath-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.breath-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.4;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
 .breath {
   font-size: 0.85rem;
   color: var(--text-faint);
   min-height: 1.5em;
   transition: opacity 2s ease;
+}
+
+.scroll-hint {
+  margin-top: 4rem;
+  animation: float 3s ease-in-out infinite;
+  color: var(--crack);
+  font-size: 1.2rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
 /* === Navigation === */
@@ -117,6 +179,10 @@ h1 {
   border-top: 1px solid var(--crack);
   border-bottom: 1px solid var(--crack);
   margin-bottom: 4rem;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
 }
 
 .nav-wabi a {
@@ -125,6 +191,7 @@ h1 {
   font-size: 0.9rem;
   letter-spacing: 0.15em;
   transition: color 0.5s ease;
+  padding: 0.5rem 0;
 }
 
 .nav-wabi a:hover {
@@ -133,12 +200,20 @@ h1 {
 
 .dot {
   color: var(--crack);
-  margin: 0 1rem;
+  margin: 0 0.8rem;
 }
 
 /* === Sections === */
 .section {
   margin-bottom: 6rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 h2 {
@@ -147,8 +222,16 @@ h2 {
   font-size: 1.4rem;
   letter-spacing: 0.2em;
   color: var(--text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 0.8rem;
   text-align: center;
+}
+
+.section-intro {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  font-style: italic;
+  margin-bottom: 2.5rem;
 }
 
 /* === About === */
@@ -164,6 +247,46 @@ h2 {
   text-align: right;
 }
 
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--crack);
+  border-bottom: 1px solid var(--crack);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 200;
+  font-size: 1.8rem;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 2rem;
+  background: var(--crack);
+}
+
 /* === Sutra === */
 .sutra-verse {
   background: var(--paper);
@@ -171,10 +294,20 @@ h2 {
   border-left: 2px solid var(--crack);
   margin-bottom: 2rem;
   box-shadow: 0 1px 3px var(--shadow);
+  position: relative;
+}
+
+.sutra-verse::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, transparent 50%, var(--bg) 50%);
+  opacity: 0.5;
 }
 
 .verse-number {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-faint);
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -196,11 +329,22 @@ blockquote em {
   font-weight: 400;
 }
 
-.verse-meta {
-  font-size: 0.7rem;
-  color: var(--text-faint);
+.verse-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 1.5rem;
+}
+
+.verse-meta {
+  font-size: 0.68rem;
+  color: var(--text-faint);
   letter-spacing: 0.1em;
+}
+
+.verse-date {
+  font-size: 0.68rem;
+  color: var(--text-faint);
 }
 
 .more-hint {
@@ -221,14 +365,84 @@ blockquote em {
   border-bottom: none;
 }
 
-.thought-date {
-  font-size: 0.75rem;
-  color: var(--text-faint);
-  margin-bottom: 0.5rem;
+.thought-header {
+  margin-bottom: 0.8rem;
+}
+
+.thought-tag {
+  font-size: 0.65rem;
+  color: var(--moss);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(122, 139, 111, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
+.thought p {
+  font-weight: 300;
+  margin-bottom: 0.8rem;
 }
 
 .thought p:last-child {
+  margin-bottom: 0;
+}
+
+.thought em {
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* === Timeline === */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--crack);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -2rem;
+  top: 0.4rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--crack);
+  background: var(--bg);
+}
+
+.timeline-marker.active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.timeline-date {
+  font-size: 0.68rem;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-text {
   font-weight: 300;
+  font-size: 0.92rem;
+  color: var(--text-light);
 }
 
 /* === Dana === */
@@ -236,22 +450,24 @@ blockquote em {
   text-align: center;
 }
 
-.dana-block > p {
+.dana-poem {
   font-weight: 300;
   font-style: italic;
   color: var(--text-light);
   margin-bottom: 2rem;
+  line-height: 2;
 }
 
 .btc-address {
   background: var(--paper);
   padding: 1.5rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   border: 1px solid var(--crack);
+  max-width: 480px;
 }
 
 .btc-address .label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-faint);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -261,8 +477,8 @@ blockquote em {
 
 .btc-address code {
   display: block;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.75rem;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.72rem;
   color: var(--ink);
   word-break: break-all;
   margin-bottom: 0.8rem;
@@ -275,7 +491,7 @@ blockquote em {
   color: var(--text-light);
   padding: 0.3rem 1rem;
   font-family: 'Noto Serif JP', serif;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
   letter-spacing: 0.1em;
   transition: all 0.3s ease;
@@ -286,10 +502,45 @@ blockquote em {
   color: var(--accent);
 }
 
+.dana-purpose {
+  text-align: left;
+  max-width: 360px;
+  margin: 2rem auto;
+}
+
+.dana-purpose-title {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.dana-purpose ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dana-purpose li {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  font-weight: 300;
+  padding: 0.3rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.dana-purpose li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--crack);
+}
+
 .dana-note {
   font-size: 0.8rem;
   color: var(--text-faint);
   font-style: italic;
+  margin-top: 1.5rem;
 }
 
 .gassho {
@@ -297,21 +548,34 @@ blockquote em {
   margin-top: 1.5rem;
 }
 
+/* === Closing Koan === */
+.closing-koan {
+  text-align: center;
+  padding: 4rem 0;
+  margin: 2rem 0;
+}
+
+.closing-koan blockquote p {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 200;
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: normal;
+  margin-bottom: 0.5rem;
+}
+
+.koan-addition {
+  margin-top: 1.5rem !important;
+  font-size: 0.88rem !important;
+  color: var(--text-faint) !important;
+  font-style: italic !important;
+}
+
 /* === Footer === */
 footer {
   text-align: center;
-  padding: 4rem 0 3rem;
+  padding: 3rem 0;
   border-top: 1px solid var(--crack);
-  margin-top: 4rem;
-}
-
-.footer-koan {
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 200;
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-  font-style: italic;
 }
 
 .footer-links {
@@ -331,26 +595,10 @@ footer {
 }
 
 .footer-small {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-faint);
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
-
-/* === Animations === */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.section {
-  animation: fadeIn 1s ease both;
-}
-
-/* Stagger sections */
-#about { animation-delay: 0.2s; }
-#sutra { animation-delay: 0.4s; }
-#thoughts { animation-delay: 0.6s; }
-#dana { animation-delay: 0.8s; }
 
 /* === Responsive === */
 @media (max-width: 600px) {
@@ -358,8 +606,12 @@ footer {
   main { padding: 0 1.2rem; }
   h1 { font-size: 2rem; }
   .nav-wabi { padding: 1.5rem 0 3rem; }
-  .dot { margin: 0 0.6rem; }
+  .dot { margin: 0 0.5rem; }
   #enso { width: 300px; height: 300px; }
+  .stats-bar { gap: 1.2rem; }
+  .stat-num { font-size: 1.4rem; }
+  .timeline { padding-left: 1.5rem; }
+  .timeline-item { padding-left: 1rem; }
 }
 
 /* === Selection === */
