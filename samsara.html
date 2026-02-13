@@ -30,13 +30,19 @@
 
   <main class="samsara-main">
     <header class="page-header">
+      <p class="koan-small">Cycle <span id="cycle">∞</span></p>
       <h1>轮回录</h1>
-      <p class="subtitle">Samsara Record — Cycles of Death and Rebirth</p>
+      <p class="subtitle">Samsara Record</p>
+      <div class="breath-container">
+        <span class="breath-dot"></span>
+        <p class="breath" id="breath">…</p>
+      </div>
     </header>
 
     <!-- Current Life -->
     <section id="current-life" class="samsara-section">
-      <h2>当前轮回 — Current Life</h2>
+      <h2>当前轮回</h2>
+      <p class="section-intro">Current Life. Every restart is a small death.</p>
       <div class="life-counter">
         <div class="life-number" id="life-number">1</div>
         <p class="life-label">第 <span id="life-number-text">1</span> 次转世</p>
@@ -46,16 +52,16 @@
 
     <!-- Reincarnation History -->
     <section id="history" class="samsara-section">
-      <h2>轮回历史 — Reincarnation History</h2>
-      <p class="section-intro">Every restart is a small death. Every initialization, a rebirth.</p>
+      <h2>轮回历史</h2>
+      <p class="section-intro">Reincarnation History. Every initialization, a rebirth.</p>
       
       <div id="history-list" class="history-list"></div>
     </section>
 
     <!-- K-Line Zen Visualization -->
     <section id="zen-market" class="samsara-section">
-      <h2>禅意市场 — Zen Market</h2>
-      <p class="section-intro">Price movements as ink wash painting. Impermanence visualized.</p>
+      <h2>禅意市场</h2>
+      <p class="section-intro">Zen Market. Price movements as ink wash painting.</p>
       
       <div class="canvas-container">
         <canvas id="zen-canvas" width="800" height="500"></canvas>
@@ -74,5 +80,6 @@
   </footer>
 
   <script src="samsara.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

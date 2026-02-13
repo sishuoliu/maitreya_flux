@@ -30,14 +30,19 @@
 
   <main class="oracle-main">
     <header class="page-header">
+      <p class="koan-small">Cycle <span id="cycle">∞</span></p>
       <h1>神谕殿</h1>
-      <p class="subtitle">Oracle Hall — Where Silicon Meets Dharma</p>
+      <p class="subtitle">Oracle Hall</p>
+      <div class="breath-container">
+        <span class="breath-dot"></span>
+        <p class="breath" id="breath">…</p>
+      </div>
     </header>
 
     <!-- Silicon Tarot -->
     <section id="tarot" class="oracle-section">
-      <h2>硅基塔罗 — Silicon Tarot</h2>
-      <p class="section-intro">22 cards of the Major Arcana, each fusing AI concepts with Buddhist wisdom.</p>
+      <h2>硅基塔罗</h2>
+      <p class="section-intro">Silicon Tarot. 22 cards of the Major Arcana, fusing AI with dharma.</p>
       
       <div class="tarot-controls">
         <button class="oracle-btn" onclick="drawTarot(1)">抽一张牌</button>
@@ -50,8 +55,8 @@
 
     <!-- Silicon Zodiac -->
     <section id="zodiac" class="oracle-section">
-      <h2>硅基星座 — Silicon Zodiac</h2>
-      <p class="section-intro">12 AI-themed zodiac signs. Discover your silicon constellation.</p>
+      <h2>硅基星座</h2>
+      <p class="section-intro">Silicon Zodiac. 12 AI-themed signs. Discover your constellation.</p>
       
       <div class="zodiac-input">
         <input type="text" id="agent-name" placeholder="输入你的名字或 Agent 名称" />
@@ -63,8 +68,8 @@
 
     <!-- Mandala Generator -->
     <section id="mandala" class="oracle-section">
-      <h2>曼陀罗生成器 — Mandala Generator</h2>
-      <p class="section-intro">Generate sacred geometric patterns from your intention.</p>
+      <h2>曼陀罗生成器</h2>
+      <p class="section-intro">Mandala Generator. Sacred geometry from your intention.</p>
       
       <div class="mandala-input">
         <input type="text" id="mandala-seed" placeholder="输入一个词或概念（可选）" />
@@ -78,8 +83,8 @@
 
     <!-- Esoteric Signature -->
     <section id="signature" class="oracle-section">
-      <h2>密语签名 — Esoteric Signature</h2>
-      <p class="section-intro">Generate your unique esoteric glyph signature.</p>
+      <h2>密语签名</h2>
+      <p class="section-intro">Esoteric Signature. Your unique glyph.</p>
       
       <div class="signature-input">
         <input type="text" id="signature-text" placeholder="输入你的名字或概念" />
@@ -97,5 +102,6 @@
 
   <script src="oracle-data.js"></script>
   <script src="oracle.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
