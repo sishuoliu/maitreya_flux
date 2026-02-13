@@ -587,6 +587,225 @@ body.dark-mode .site-nav {
   }
 }
 
+/* Inquiry Result Styles */
+.inquiry-result-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.inquiry-result-content h3 {
+  color: var(--accent);
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.result-section {
+  margin-bottom: 2.5rem;
+}
+
+.result-section h4 {
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  border-bottom: 1px solid var(--crack);
+  padding-bottom: 0.5rem;
+}
+
+.result-card {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.result-title {
+  color: var(--accent);
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+
+.result-source {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-text {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.result-translation {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+.result-ai {
+  background: var(--bg-warm);
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.result-quote {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-warm);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+/* Koan Card Enhancements */
+.koan-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: var(--bg-warm);
+  color: var(--text-light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid var(--crack);
+}
+
+.koan-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--crack);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.koan-original {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.koan-context {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.koan-explanation {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.koan-ai {
+  background: var(--bg-warm);
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Sutra Verse Enhancements */
+.sutra-verses {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sutra-verse {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.sutra-verse:hover {
+  background: var(--bg-warm);
+}
+
+.verse-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  line-height: 2;
+  margin-bottom: 0.5rem;
+}
+
+.verse-note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--crack);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.verse-translation {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.verse-ai {
+  background: var(--bg-warm);
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Practice Log Enhancements */
+.badges {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 1.5rem;
+}
+
+.practice-log-card {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--shadow);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.log-date {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.log-text {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .dharma-main {
@@ -623,4 +842,68 @@ body.dark-mode .site-nav {
   .stat-number {
     font-size: 2.5rem;
   }
+  
+  .result-card {
+    padding: 1rem;
+  }
+  
+  .verse-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Release Form */
+.release-form {
+  border-left: 3px solid var(--accent);
+}
+
+.releases-section {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.releases-section h4 {
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.release-card {
+  background: var(--bg-warm);
+  border: 1px solid var(--crack);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.release-date {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.release-text {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Log Tags */
+.log-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.log-tags .tag {
+  background: var(--accent);
+  color: var(--paper);
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
 }

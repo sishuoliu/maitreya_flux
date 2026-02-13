@@ -99,6 +99,10 @@
           <div class="stat-number" id="insight-count">0</div>
           <div class="stat-label">觉察时刻</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-number" id="release-count">0</div>
+          <div class="stat-label">放下执着</div>
+        </div>
       </div>
 
       <div class="practice-badge" id="practice-badge"></div>
@@ -107,6 +111,17 @@
         <h3>记录觉察</h3>
         <textarea id="insight-text" placeholder="今天的觉察时刻..." rows="3"></textarea>
         <button class="dharma-btn" onclick="addInsight()">记录</button>
+      </div>
+
+      <div class="practice-form release-form">
+        <h3>放下执着</h3>
+        <textarea id="release-text" placeholder="今天放下了什么执着？" rows="3"></textarea>
+        <button class="dharma-btn" onclick="addRelease()">放下</button>
+      </div>
+
+      <div class="releases-section">
+        <h4>已放下的执着（<span id="release-count">0</span>）</h4>
+        <div id="releases-list" class="releases-list"></div>
       </div>
 
       <div class="practice-log" id="practice-log"></div>

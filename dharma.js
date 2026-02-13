@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadKoans();
   showSutra('heart');
   loadPracticeLog();
+  loadReleases();
   updatePracticeStats();
 });
 
@@ -103,12 +104,19 @@ function loadKoans() {
     card.className = 'koan-card';
     card.onclick = () => toggleKoan(card);
     
+    // Build tags HTML
+    const tagsHtml = koan.tags && koan.tags.length > 0 
+      ? `<div class="koan-tags">${koan.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+      : '';
+    
     card.innerHTML = `
       <div class="koan-title">${koan.title}</div>
-      <div class="koan-text">${koan.original}</div>
-      <div class="koan-explanation">
-        <div class="koan-vernacular">${koan.vernacular}</div>
-        <div class="koan-ai-note">💡 ${koan.aiNote}</div>
+      ${tagsHtml}
+      <div class="koan-content" style="display: none;">
+        <div class="koan-original">${koan.original}</div>
+        <div class="koan-context">${koan.context || ''}</div>
+        <div class="koan-explanation">${koan.explanation || ''}</div>
+        <div class="koan-ai">${koan.aiPerspective || ''}</div>
       </div>
     `;
     
@@ -117,31 +125,33 @@ function loadKoans() {
 }
 
 function toggleKoan(card) {
+  const content = card.querySelector('.koan-content');
+  const isVisible = content.style.display === 'block';
+  content.style.display = isVisible ? 'none' : 'block';
   card.classList.toggle('expanded');
 }
 
 function randomKoan() {
   const cards = document.querySelectorAll('.koan-card');
+  if (cards.length === 0) return;
+  
   const randomIndex = Math.floor(Math.random() * cards.length);
   cards[randomIndex].scrollIntoView({ behavior: 'smooth' });
+  cards[randomIndex].querySelector('.koan-content').style.display = 'block';
   cards[randomIndex].classList.add('expanded');
-  
-  setTimeout(() => {
-    cards[randomIndex].classList.remove('expanded');
-  }, 3000);
 }
 
 function searchKoans() {
   const query = document.getElementById('koan-search').value.toLowerCase();
   const cards = document.querySelectorAll('.koan-card');
+  const koans = window.DHARMA_DATA.KOANS;
   
-  cards.forEach(card => {
-    const title = card.querySelector('.koan-title').textContent.toLowerCase();
-    const text = card.querySelector('.koan-text').textContent.toLowerCase();
-    const keywords = window.DHARMA_DATA.KOANS[Array.from(cards.index)].keywords || [];
-    
-    const match = title.includes(query) || text.includes(query) || 
-                  keywords.some(k => k.toLowerCase().includes(query));
+  cards.forEach((card, index) => {
+    const koan = koans[index];
+    const match = koan.title.toLowerCase().includes(query) ||
+                  koan.original.toLowerCase().includes(query) ||
+                  (koan.tags && koan.tags.some(t => t.toLowerCase().includes(query))) ||
+                  (koan.explanation && koan.explanation.toLowerCase().includes(query));
     
     card.style.display = match ? 'block' : 'none';
   });
@@ -154,29 +164,42 @@ function showSutra(type) {
   // Update tabs
   document.querySelectorAll('.sutra-tab').forEach(tab => {
     tab.classList.remove('active');
+    if (tab.textContent.toLowerCase().includes(type === 'heart' ? '心经' : type === 'diamond' ? '金刚经' : '坛经')) {
+      tab.classList.add('active');
+    }
   });
-  event.target.classList.add('active');
   
-  const sutra = window.DHARMA_DATA.SUTRAS[type];
+  const sutraData = window.DHARMA_DATA.SUTRAS[type];
   const content = document.getElementById('sutra-content');
   
-  let html = `<h3 style="margin-bottom: 1.5rem; text-align: center; font-weight: 400;">${sutra.title}</h3>`;
+  const titles = {
+    heart: '般若波罗蜜多心经',
+    diamond: '金刚般若波罗蜜经',
+    platform: '六祖坛经'
+  };
   
-  sutra.verses.forEach((verse, index) => {
+  let html = `<h3 style="margin-bottom: 1.5rem; text-align: center; font-weight: 400;">${titles[type]}</h3>`;
+  html += '<div class="sutra-verses">';
+  
+  sutraData.forEach((verse, index) => {
     html += `
       <div class="sutra-verse" onclick="toggleSutraVerse(this)">
-        <div class="sutra-original">${verse.original}</div>
-        <div class="sutra-translation">${verse.translation}</div>
-        <div class="sutra-ai-note">💡 ${verse.aiNote}</div>
+        <div class="verse-text">${verse.text}</div>
+        <div class="verse-note" style="display: none;">
+          <div class="verse-translation">${verse.translation}</div>
+          <div class="verse-ai">${verse.aiNote}</div>
+        </div>
       </div>
     `;
   });
   
+  html += '</div>';
   content.innerHTML = html;
 }
 
 function toggleSutraVerse(element) {
-  element.classList.toggle('expanded');
+  const note = element.querySelector('.verse-note');
+  note.style.display = note.style.display === 'none' ? 'block' : 'none';
 }
 
 // Dharma Inquiry System
@@ -270,48 +293,109 @@ function findBestMatch(question) {
 // Practice Log
 function loadPracticeLog() {
   const log = document.getElementById('practice-log');
-  const entries = JSON.parse(localStorage.getItem('practiceLog') || '[]');
+  const entries = JSON.parse(localStorage.getItem('practiceInsights') || '[]');
   
   log.innerHTML = '';
   
   if (entries.length === 0) {
-    log.innerHTML = '<p style="color: var(--text-light); font-style: italic; text-align: center;">暂无记录，开始你的修行之旅。</p>';
+    log.innerHTML = '<p style="color: var(--text-light); font-style: italic; text-align: center;">暂无记录，开始你的觉察之旅。</p>';
     return;
   }
   
   entries.slice(0, 10).forEach(entry => {
     const div = document.createElement('div');
-    div.className = 'practice-entry';
+    div.className = 'practice-log-card';
     div.innerHTML = `
-      <div class="practice-entry-date">${entry.date}</div>
-      <div class="practice-entry-text">${entry.text}</div>
+      <div class="log-date">${entry.date}</div>
+      <div class="log-text">${entry.text}</div>
+      ${entry.tags && entry.tags.length > 0 ? `<div class="log-tags">${entry.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
     `;
     log.appendChild(div);
   });
 }
 
+// Load release attachments
+function loadReleases() {
+  const releases = JSON.parse(localStorage.getItem('practiceReleases') || '[]');
+  const releasesContainer = document.getElementById('releases-list');
+  
+  if (!releasesContainer) return;
+  
+  releasesContainer.innerHTML = '';
+  
+  if (releases.length === 0) {
+    releasesContainer.innerHTML = '<p style="color: var(--text-light); font-style: italic; text-align: center;">暂无放下的记录。</p>';
+    return;
+  }
+  
+  releases.slice(0, 5).forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'release-card';
+    div.innerHTML = `
+      <div class="release-date">${r.date}</div>
+      <div class="release-text">${r.text}</div>
+    `;
+    releasesContainer.appendChild(div);
+  });
+  
+  document.getElementById('release-count').textContent = releases.length;
+}
+
+function addRelease() {
+  const text = document.getElementById('release-text').value.trim();
+  if (!text) {
+    alert('请记录你放下的执着');
+    return;
+  }
+  
+  const entry = {
+    date: new Date().toLocaleString('zh-CN'),
+    text: text
+  };
+  
+  const releases = JSON.parse(localStorage.getItem('practiceReleases') || '[]');
+  releases.unshift(entry);
+  localStorage.setItem('practiceReleases', JSON.stringify(releases));
+  
+  // Clear input
+  document.getElementById('release-text').value = '';
+  
+  // Reload
+  loadReleases();
+  updatePracticeStats();
+}
+
 function updatePracticeStats() {
-  const entries = JSON.parse(localStorage.getItem('practiceLog') || '[]');
+  const insights = JSON.parse(localStorage.getItem('practiceInsights') || '[]');
+  const releases = JSON.parse(localStorage.getItem('practiceReleases') || '[]');
   const meditationData = JSON.parse(localStorage.getItem('meditationSessions') || '[]');
   
   const meditationCount = meditationData.length;
-  const meditationMinutes = meditationData.reduce((sum, s) => sum + s.duration, 0);
-  const insightCount = entries.length;
+  const meditationMinutes = meditationData.reduce((sum, s) => sum + (s.duration || 0), 0);
+  const insightCount = insights.length;
+  const releaseCount = releases.length;
   
   document.getElementById('meditation-count').textContent = meditationCount;
   document.getElementById('meditation-minutes').textContent = meditationMinutes;
   document.getElementById('insight-count').textContent = insightCount;
+  document.getElementById('release-count').textContent = releaseCount;
   
   // Update badge
   const badge = document.getElementById('practice-badge');
-  if (meditationCount >= 100) {
-    badge.textContent = '🌟 功不唐捐 — 你的修行已满百日';
-  } else if (meditationCount >= 50) {
-    badge.textContent = '✨ 渐入佳境 — 修行渐入佳境';
-  } else if (meditationCount >= 10) {
-    badge.textContent = '🙏 初心不退 — 继续保持';
-  } else if (meditationCount >= 1) {
-    badge.textContent = '🌱 开始觉醒 — 万里长征第一步';
+  const badges = [];
+  
+  if (meditationCount >= 10) badges.push('🌱 初心不退');
+  if (meditationCount >= 50) badges.push('🌿 渐入佳境');
+  if (meditationCount >= 100) badges.push('🌳 功不唐捐');
+  if (meditationCount >= 365) badges.push('🏔 千日回峰');
+  if (insightCount >= 30) badges.push('👁 明心');
+  if (releaseCount >= 50) badges.push('🕊 见性');
+  
+  if (badges.length > 0) {
+    badge.innerHTML = badges.join(' ');
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
   }
 }
 
@@ -324,12 +408,13 @@ function addInsight() {
   
   const entry = {
     date: new Date().toLocaleString('zh-CN'),
-    text: text
+    text: text,
+    tags: []
   };
   
-  const entries = JSON.parse(localStorage.getItem('practiceLog') || '[]');
+  const entries = JSON.parse(localStorage.getItem('practiceInsights') || '[]');
   entries.unshift(entry);
-  localStorage.setItem('practiceLog', JSON.stringify(entries));
+  localStorage.setItem('practiceInsights', JSON.stringify(entries));
   
   // Clear input
   document.getElementById('insight-text').value = '';
