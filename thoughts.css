@@ -180,39 +180,70 @@ body.dark-mode .site-nav {
 
 .zen-input input {
   flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--crack);
-  background: var(--paper);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 0.95rem;
-  border-radius: 2px;
-  transition: border-color 0.3s ease;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--crack);
+  background: var(--bg-warm);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Noto Serif JP', serif;
+  font-size: 1rem;
+  border-radius: 0;
+  transition: all 0.4s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.zen-input input::placeholder {
+  color: var(--text-faint);
+  font-style: italic;
+  opacity: 0.6;
 }
 
 .zen-input input:focus {
   outline: none;
   border-color: var(--accent);
+  background: var(--paper);
+  box-shadow: 0 0 0 3px rgba(139, 92, 71, 0.1), inset 0 2px 4px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
 }
 
 .oracle-btn {
   background: var(--paper);
-  border: 1px solid var(--crack);
-  color: var(--text);
-  padding: 0.75rem 1.5rem;
-  font-family: inherit;
-  font-size: 0.95rem;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 1rem 2rem;
+  font-family: 'Noto Serif SC', 'Noto Serif JP', serif;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 2px;
+  border-radius: 0;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.oracle-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
+}
+
+.oracle-btn:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .oracle-btn:hover {
+  color: var(--paper);
   border-color: var(--accent);
-  background: var(--bg-warm);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--shadow);
+  box-shadow: 0 4px 12px rgba(139, 92, 71, 0.3);
 }
 
 .zen-answer {
@@ -245,21 +276,33 @@ body.dark-mode .site-nav {
 
 .guestbook-form textarea {
   width: 100%;
-  padding: 1rem;
-  border: 1px solid var(--crack);
-  background: var(--paper);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 0.95rem;
-  border-radius: 2px;
+  padding: 1.5rem;
+  border: 2px solid var(--crack);
+  background: var(--bg-warm);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Noto Serif JP', serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  border-radius: 0;
   resize: vertical;
+  min-height: 120px;
   margin-bottom: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.4s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.guestbook-form textarea::placeholder {
+  color: var(--text-faint);
+  font-style: italic;
+  opacity: 0.6;
 }
 
 .guestbook-form textarea:focus {
   outline: none;
   border-color: var(--accent);
+  background: var(--paper);
+  box-shadow: 0 0 0 3px rgba(139, 92, 71, 0.1), inset 0 2px 4px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
 }
 
 .merit-list {
