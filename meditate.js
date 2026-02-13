@@ -213,6 +213,10 @@ function completeMeditation() {
   const canvas = document.getElementById('meditation-enso');
   canvas.classList.remove('enso-pulsing');
   
+  // Dispatch event for dharma page to pick up
+  const minutes = duration / 60;
+  window.dispatchEvent(new CustomEvent('meditationComplete', { detail: { minutes } }));
+  
   // Show koan
   document.getElementById('meditation-active').style.display = 'none';
   document.getElementById('koan-display').style.display = 'block';

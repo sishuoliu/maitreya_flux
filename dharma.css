@@ -1,0 +1,626 @@
+/* Dharma Page Styles */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--crack);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  background: rgba(250, 246, 241, 0.95);
+}
+
+body.dark-mode .site-nav {
+  background: rgba(37, 34, 32, 0.95);
+}
+
+.site-nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: var(--accent);
+}
+
+.site-nav .dot {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+}
+
+.dharma-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.page-header .subtitle {
+  color: var(--text-light);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.dharma-section {
+  margin-bottom: 5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.dharma-section:nth-child(2) { animation-delay: 0.05s; }
+.dharma-section:nth-child(3) { animation-delay: 0.1s; }
+.dharma-section:nth-child(4) { animation-delay: 0.15s; }
+.dharma-section:nth-child(5) { animation-delay: 0.2s; }
+.dharma-section:nth-child(6) { animation-delay: 0.25s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dharma-section h2 {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.dharma-section h3 {
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+/* Buttons */
+.dharma-btn {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.dharma-btn:hover {
+  border-color: var(--accent);
+  background: var(--bg-warm);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.dharma-btn-small {
+  background: none;
+  border: 1px solid var(--crack);
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.dharma-btn-small:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Inquiry Section */
+.inquiry-section {
+  background: var(--bg-warm);
+  padding: 2rem;
+  border: 1px solid var(--crack);
+  border-radius: 4px;
+}
+
+.inquiry-box {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.inquiry-box input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--crack);
+  background: var(--paper);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  border-radius: 2px;
+}
+
+.inquiry-box input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.inquiry-result {
+  display: none;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.inquiry-result.show {
+  display: block;
+}
+
+.inquiry-answer {
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  padding: 2rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.inquiry-answer h4 {
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.inquiry-answer-text {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.inquiry-references {
+  border-top: 1px solid var(--crack);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.inquiry-ref {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--crack);
+}
+
+.inquiry-ref-title {
+  color: var(--accent);
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+
+/* Daily Question */
+.daily-question-card {
+  background: var(--paper);
+  border: 2px solid var(--crack);
+  padding: 2rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.daily-date {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.daily-question {
+  font-size: 1.5rem;
+  color: var(--ink);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.daily-stats {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.daily-answer-form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--crack);
+  background: var(--bg-warm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  border-radius: 2px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.daily-answer-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.daily-submitted {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-warm);
+  border-radius: 4px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.daily-submitted p {
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* Koans */
+.koans-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.koans-controls input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--crack);
+  background: var(--paper);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  border-radius: 2px;
+}
+
+.koans-controls input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.koans-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.koan-card {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.koan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px var(--shadow);
+  border-color: var(--accent);
+}
+
+.koan-card.expanded {
+  grid-column: 1 / -1;
+}
+
+.koan-title {
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.koan-text {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.koan-explanation {
+  display: none;
+  border-top: 1px solid var(--crack);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.koan-card.expanded .koan-explanation {
+  display: block;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.koan-vernacular {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.koan-ai-note {
+  background: var(--bg-warm);
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Sutras */
+.sutras-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.sutra-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-light);
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sutra-tab:hover {
+  color: var(--accent);
+}
+
+.sutra-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.sutra-content {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 2rem;
+  border-radius: 4px;
+  min-height: 400px;
+}
+
+.sutra-verse {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--crack);
+}
+
+.sutra-verse:last-child {
+  border-bottom: none;
+}
+
+.sutra-original {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  line-height: 2;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sutra-original:hover {
+  color: var(--accent);
+}
+
+.sutra-translation {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.sutra-ai-note {
+  display: none;
+  background: var(--bg-warm);
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.sutra-verse.expanded .sutra-ai-note {
+  display: block;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Practice Log */
+.practice-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 2rem;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.stat-number {
+  font-size: 3rem;
+  color: var(--accent);
+  font-weight: 200;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.practice-badge {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--bg-warm);
+  border: 1px solid var(--crack);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.practice-badge:empty {
+  display: none;
+}
+
+.practice-form {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.practice-form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--crack);
+  background: var(--bg-warm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  border-radius: 2px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.practice-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.practice-log {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.practice-entry {
+  background: var(--paper);
+  border: 1px solid var(--crack);
+  padding: 1rem;
+  border-radius: 4px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.practice-entry-date {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.practice-entry-text {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--crack);
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0.5rem 0;
+}
+
+.footer-small {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dharma-main {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .inquiry-box {
+    flex-direction: column;
+  }
+
+  .koans-list {
+    grid-template-columns: 1fr;
+  }
+
+  .koan-card.expanded {
+    grid-column: 1;
+  }
+
+  .sutras-tabs {
+    flex-wrap: wrap;
+  }
+
+  .sutra-tab {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .practice-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}

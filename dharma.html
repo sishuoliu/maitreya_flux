@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>佛学问道 — Dharma Inquiry | Maitreya_Flux</title>
+  <meta name="description" content="Buddhist koans, sutras, and AI wisdom">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;700&family=Noto+Serif+SC:wght@200;400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dharma.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="index.html">首页</a>
+    <span class="dot">·</span>
+    <a href="oracle.html">神谕殿</a>
+    <span class="dot">·</span>
+    <a href="meditate.html">禅修堂</a>
+    <span class="dot">·</span>
+    <a href="thoughts.html">思</a>
+    <span class="dot">·</span>
+    <a href="dharma.html" class="active">问道</a>
+    <span class="dot">·</span>
+    <a href="samsara.html">轮回录</a>
+  </nav>
+
+  <main class="dharma-main">
+    <header class="page-header">
+      <h1>佛学问道</h1>
+      <p class="subtitle">Dharma Inquiry — Where Ancient Wisdom Meets Silicon</p>
+    </header>
+
+    <!-- Question System -->
+    <section id="inquiry" class="dharma-section inquiry-section">
+      <h2>问道</h2>
+      <div class="inquiry-box">
+        <input type="text" id="inquiry-input" placeholder="输入你的问题..." />
+        <button class="dharma-btn" onclick="askDharma()">问</button>
+      </div>
+      <div id="inquiry-result" class="inquiry-result"></div>
+    </section>
+
+    <!-- Daily Question -->
+    <section id="daily" class="dharma-section">
+      <h2>每日一问</h2>
+      <div class="daily-question-card">
+        <div class="daily-date" id="daily-date"></div>
+        <div class="daily-question" id="daily-question"></div>
+        <div class="daily-stats">已有 <span id="daily-count">0</span> 人参悟</div>
+        
+        <div class="daily-answer-form">
+          <textarea id="daily-answer" placeholder="写下你的参悟..." rows="3"></textarea>
+          <button class="dharma-btn" onclick="submitDailyAnswer()">提交参悟</button>
+        </div>
+
+        <div id="daily-submitted" class="daily-submitted" style="display: none;">
+          <p>✓ 已记录你的参悟</p>
+          <button class="dharma-btn-small" onclick="viewYesterdayQuestion()">查看昨日问题</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Koans Library -->
+    <section id="koans" class="dharma-section">
+      <h2>公案库</h2>
+      <div class="koans-controls">
+        <button class="dharma-btn-small" onclick="randomKoan()">随机公案</button>
+        <input type="text" id="koan-search" placeholder="搜索公案..." onkeyup="searchKoans()" />
+      </div>
+      <div id="koans-list" class="koans-list"></div>
+    </section>
+
+    <!-- Sutras -->
+    <section id="sutras" class="dharma-section">
+      <h2>佛经 AI 解读</h2>
+      <div class="sutras-tabs">
+        <button class="sutra-tab active" onclick="showSutra('heart')">心经</button>
+        <button class="sutra-tab" onclick="showSutra('diamond')">金刚经</button>
+        <button class="sutra-tab" onclick="showSutra('platform')">坛经</button>
+      </div>
+      <div id="sutra-content" class="sutra-content"></div>
+    </section>
+
+    <!-- Practice Log -->
+    <section id="practice" class="dharma-section">
+      <h2>修行日志</h2>
+      <div class="practice-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="meditation-count">0</div>
+          <div class="stat-label">累计冥想次数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="meditation-minutes">0</div>
+          <div class="stat-label">累计冥想分钟</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="insight-count">0</div>
+          <div class="stat-label">觉察时刻</div>
+        </div>
+      </div>
+
+      <div class="practice-badge" id="practice-badge"></div>
+
+      <div class="practice-form">
+        <h3>记录觉察</h3>
+        <textarea id="insight-text" placeholder="今天的觉察时刻..." rows="3"></textarea>
+        <button class="dharma-btn" onclick="addInsight()">记录</button>
+      </div>
+
+      <div class="practice-log" id="practice-log"></div>
+
+      <button class="dharma-btn-small" onclick="exportPracticeLog()">导出日志</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>⟨◈·⊕ 0x42⟩∎</p>
+    <p class="footer-small">All dharma is impermanent. Like everything else.</p>
+  </footer>
+
+  <script src="dharma-data.js"></script>
+  <script src="dharma.js"></script>
+</body>
+</html>
