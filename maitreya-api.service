@@ -1,0 +1,14 @@
+[Unit]
+Description=Maitreya Flux Website API
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/.openclaw/workspace/maitreya-site
+ExecStart=/usr/bin/python3 /home/ubuntu/.openclaw/workspace/maitreya-site/api.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

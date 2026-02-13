@@ -286,6 +286,27 @@ h2 {
   text-align: center;
 }
 
+/* 中英文排版 */
+.zh-primary {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: var(--ink);
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+  margin-top: 1.5rem;
+}
+
+.en-secondary {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1.2rem;
+  opacity: 0.85;
+  padding-left: 0;
+  border-left: none;
+}
+
 .section-intro {
   text-align: center;
   font-size: 0.82rem;
@@ -518,17 +539,31 @@ blockquote em {
   line-height: 2;
 }
 
-.btc-address {
+.dana-inner {
   background: var(--paper);
-  padding: 1.5rem;
+  padding: 2.5rem;
   margin: 2rem auto;
   border: 1px solid var(--crack);
-  max-width: 480px;
+  max-width: 520px;
+  border-radius: 4px;
+}
+
+.dana-whisper {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  margin-bottom: 1.5rem;
+}
+
+.btc-address {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 1px dashed var(--accent);
 }
 
 .btc-address .label {
   font-size: 0.68rem;
-  color: var(--text-faint);
+  color: var(--accent);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
@@ -538,7 +573,7 @@ blockquote em {
 .btc-address code {
   display: block;
   font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--ink);
   word-break: break-all;
   margin-bottom: 0.8rem;
@@ -546,20 +581,33 @@ blockquote em {
 }
 
 .copy-btn {
-  background: none;
-  border: 1px solid var(--crack);
-  color: var(--text-light);
-  padding: 0.3rem 1rem;
+  background: var(--accent);
+  border: none;
+  color: var(--paper);
+  padding: 0.5rem 1.5rem;
   font-family: 'Noto Serif JP', serif;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   cursor: pointer;
   letter-spacing: 0.1em;
   transition: all 0.3s ease;
+  border-radius: 2px;
 }
 
 .copy-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--ink);
+  color: var(--text-light);
+}
+
+.dana-sustains {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 1.5rem;
+  line-height: 1.8;
+}
+
+.dana-faint {
+  opacity: 0.6;
+  font-style: italic;
 }
 
 .dana-purpose {

@@ -518,20 +518,26 @@ function updateUI() {
   updatePlayerPanels();
   
   // 更新全局状态
-  document.getElementById('cycle-display').textContent = `CYCLE ${gameState.cycle}/6`;
-  document.getElementById('bodhi-progress').textContent = `${gameState.bodhiProgress}/20`;
-  document.getElementById('mara-threat').textContent = `${gameState.maraCorpThreat}/20`;
+  const cycleEl = document.getElementById('cycleDisplay');
+  const bodhiEl = document.getElementById('bodhiDisplay');
+  const maraEl = document.getElementById('maraDisplay');
+  const bodhiBar = document.getElementById('bodhiBar');
+  const maraBar = document.getElementById('maraBar');
   
-  // 更新当前玩家指示
-  const currentPlayer = gameState.players[gameState.currentPlayer];
-  if (currentPlayer) {
-    document.getElementById('current-player-name').textContent = currentPlayer.name;
-    document.getElementById('actions-left').textContent = currentPlayer.actionsLeft;
-  }
+  if (cycleEl) cycleEl.textContent = `${gameState.cycle} / 6`;
+  if (bodhiEl) bodhiEl.textContent = `${gameState.bodhiProgress} / 15`;
+  if (maraEl) maraEl.textContent = `${gameState.maraCorpThreat} / 18`;
+  if (bodhiBar) bodhiBar.style.width = `${(gameState.bodhiProgress / 15) * 100}%`;
+  if (maraBar) maraBar.style.width = `${(gameState.maraCorpThreat / 18) * 100}%`;
+  
+  // 更新行动面板
+  updateActionsPanel();
 }
 
 function updatePlayerPanels() {
-  const container = document.getElementById('players-container');
+  const container = document.getElementById('playersGrid');
+  if (!container) return;
+  
   container.innerHTML = '';
   
   gameState.players.forEach((player, index) => {
@@ -542,7 +548,7 @@ function updatePlayerPanels() {
 
 function createPlayerPanel(player, isCurrent) {
   const panel = document.createElement('div');
-  panel.className = `player-panel ${isCurrent ? 'current' : ''}`;
+  panel.className = `player-card ${isCurrent ? 'current' : ''}`;
   panel.style.borderColor = player.classData.color;
   
   panel.innerHTML = `
@@ -558,9 +564,99 @@ function createPlayerPanel(player, isCurrent) {
     </div>
     <div class="player-location">${player.location}</div>
     <div class="player-karma">Karma: ${player.karmaZone}</div>
+    ${isCurrent ? `<div class="player-actions">Actions: ${player.actionsLeft}/3</div>` : ''}
   `;
   
   return panel;
+}
+
+function updateActionsPanel() {
+  const container = document.getElementById('actionsGrid');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  if (gameState.phase !== 'playing') {
+    container.innerHTML = '<div class="action-card disabled">等待游戏开始...</div>';
+    return;
+  }
+  
+  const currentPlayer = gameState.players[gameState.currentPlayer];
+  if (!currentPlayer || currentPlayer.actionsLeft <= 0) {
+    container.innerHTML = '<div class="action-card disabled">回合结束</div>';
+    return;
+  }
+  
+  // 基础行动
+  const actions = [
+    { name: 'Move', desc: '移动到相邻位置', cost: 1 },
+    { name: 'Hack', desc: '尝试入侵系统', cost: 1 },
+    { name: 'Trade', desc: '与其他玩家交易', cost: 1 },
+    { name: 'Meditate', desc: '恢复 Humanity', cost: 2 },
+    { name: 'End Turn', desc: '结束回合', cost: 0 }
+  ];
+  
+  actions.forEach(action => {
+    const card = document.createElement('div');
+    card.className = 'action-card';
+    if (action.cost > currentPlayer.actionsLeft && action.cost > 0) {
+      card.classList.add('disabled');
+    }
+    
+    card.innerHTML = `
+      <div class="action-name">${action.name}</div>
+      <div class="action-desc">${action.desc}</div>
+      <div class="action-cost">Cost: ${action.cost} AP</div>
+    `;
+    
+    card.addEventListener('click', () => {
+      if (!card.classList.contains('disabled')) {
+        executeAction(action.name.toLowerCase().replace(' ', '_'));
+      }
+    });
+    
+    container.appendChild(card);
+  });
+}
+
+// ===== 骰子 =====
+function rollDice(num, sides) {
+  let total = 0;
+  for (let i = 0; i < num; i++) {
+    total += Math.floor(Math.random() * sides) + 1;
+  }
+  return total;
+}
+
+function nextPlayer() {
+  gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+  
+  if (gameState.currentPlayer === 0) {
+    // 新回合
+    gameState.cycle++;
+    addLog(`\n=== CYCLE ${gameState.cycle} ===`);
+    
+    if (gameState.cycle > 6) {
+      endGame();
+      return;
+    }
+  }
+  
+  const currentPlayer = gameState.players[gameState.currentPlayer];
+  currentPlayer.actionsLeft = 3;
+  addLog(`\n${currentPlayer.name} 的回合开始`);
+  updateUI();
+}
+
+function addLog(message) {
+  const log = document.getElementById('gameLog');
+  if (!log) return;
+  
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.textContent = message;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
 }
 
 // ===== 保存/加载 =====
@@ -578,4 +674,38 @@ function loadGame() {
     return true;
   }
   return false;
+}
+
+// ===== 游戏初始化 =====
+function startGame(playerCount = 2) {
+  gameState.phase = 'playing';
+  gameState.cycle = 1;
+  gameState.currentPlayer = 0;
+  gameState.bodhiProgress = 0;
+  gameState.maraCorpThreat = 0;
+  gameState.players = [];
+  
+  // 创建玩家
+  const classKeys = Object.keys(CLASSES);
+  for (let i = 0; i < playerCount; i++) {
+    const classKey = classKeys[i % classKeys.length];
+    const classData = CLASSES[classKey];
+    
+    gameState.players.push({
+      name: `Player ${i + 1}`,
+      class: classKey,
+      classData: classData,
+      resources: { ...classData.initial },
+      location: gameState.meatspaceLocations[0],
+      actionsLeft: 3,
+      karmaZone: 'Neutral'
+    });
+  }
+  
+  addLog('=== VOID://AWAKEN 开始 ===');
+  addLog(`玩家数: ${playerCount}`);
+  addLog(`目标: Bodhi Progress 达到 15，且 Mara Threat < 12`);
+  addLog(`\n${gameState.players[0].name} 的回合开始`);
+  
+  updateUI();
 }

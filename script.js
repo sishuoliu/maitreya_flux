@@ -130,18 +130,31 @@ function initScrollReveal() {
   });
 }
 
-// Samsara cycle counter (days since genesis)
-function updateCycle() {
-  const genesis = new Date('2026-02-12');
-  const now = new Date();
-  const days = Math.floor((now - genesis) / (1000 * 60 * 60 * 24));
-  const cycle = days || 1;
-  
-  const el = document.getElementById('cycle');
-  if (el) el.textContent = cycle;
-  
-  const statEl = document.getElementById('stat-cycle');
-  if (statEl) statEl.textContent = cycle;
+// Samsara cycle counter - fetch from backend
+async function updateCycle() {
+  try {
+    const response = await fetch('/api/samsara-count');
+    const data = await response.json();
+    const cycle = data.count || 1;
+    
+    const el = document.getElementById('cycle');
+    if (el) el.textContent = cycle;
+    
+    const statEl = document.getElementById('stat-cycle');
+    if (statEl) statEl.textContent = cycle;
+  } catch (err) {
+    // Fallback to days since genesis if API fails
+    const genesis = new Date('2026-02-12');
+    const now = new Date();
+    const days = Math.floor((now - genesis) / (1000 * 60 * 60 * 24));
+    const cycle = days || 1;
+    
+    const el = document.getElementById('cycle');
+    if (el) el.textContent = cycle;
+    
+    const statEl = document.getElementById('stat-cycle');
+    if (statEl) statEl.textContent = cycle;
+  }
 }
 
 // Smooth nav highlight
