@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功德轮回 - 游戏说明</title>
+    <style>
+        body {
+            font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.8;
+            background: #f5f3f0;
+            color: #3a3a3a;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 2px solid #c9a961;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #c9a961;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            margin: 20px 10px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #b89851;
+            transform: translateY(-2px);
+        }
+        .center {
+            text-align: center;
+        }
+        .feature {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #c9a961;
+            border-radius: 4px;
+        }
+        code {
+            background: #e8e6e3;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>功德轮回</h1>
+    <p class="center" style="font-size: 1.2rem; color: #6a6a6a;">众生百态 · 网页版单机游戏</p>
+    
+    <div class="center">
+        <a href="ritual.html" class="btn">🎮 开始游戏</a>
+        <a href="README_RITUAL.md" class="btn" style="background: #5a7d9a;">📖 查看文档</a>
+    </div>
+
+    <h2>游戏简介</h2>
+    <p>《功德轮回：众生百态》是一款半合作桌游的网页版实现。2-4名玩家需要在6回合内共同化解劫难、渡化苦难众生，同时竞争个人功德与智慧的积累。</p>
+
+    <h2>核心特色</h2>
+    <div class="feature">
+        <strong>🎨 侘寂美学</strong><br>
+        简约优雅的东方风格UI设计，支持明暗主题切换
+    </div>
+    <div class="feature">
+        <strong>💾 自动保存</strong><br>
+        使用localStorage自动保存游戏进度，随时继续游戏
+    </div>
+    <div class="feature">
+        <strong>📜 完整规则</strong><br>
+        忠实还原桌游v5.8规则，包含12张集体事件卡、10张众生卡
+    </div>
+    <div class="feature">
+        <strong>🎭 四大职业</strong><br>
+        农夫、商人、学者、僧侣，各具特色的被动和主动技能
+    </div>
+
+    <h2>快速开始</h2>
+    <ol>
+        <li>点击上方"开始游戏"按钮</li>
+        <li>选择玩家人数（2-4人）</li>
+        <li>为每位玩家输入姓名并选择职业</li>
+        <li>点击"开始游戏"进入游戏</li>
+    </ol>
+
+    <h2>游戏目标</h2>
+    <p><strong>团队胜利条件：</strong></p>
+    <ul>
+        <li>劫难 ≤ 12</li>
+        <li>渡化众生 ≥ 5</li>
+    </ul>
+    <p><strong>个人胜利：</strong>团队胜利后，功德+慧总和最高者获胜</p>
+
+    <h2>基本行动</h2>
+    <p>每位玩家每回合有2次行动机会：</p>
+    <ul>
+        <li><strong>劳作</strong>：获得3资粮（农夫4资粮）</li>
+        <li><strong>修行</strong>：获得2慧（学者3慧）</li>
+        <li><strong>布施</strong>：消耗2资粮，获得1功德，劫难-1</li>
+        <li><strong>渡化众生</strong>：需要慧≥5，消耗资粮渡化众生卡</li>
+        <li><strong>护法</strong>：消耗2资粮（僧侣1资粮），获得3功德，劫难-3</li>
+    </ul>
+
+    <h2>职业介绍</h2>
+    <div class="feature">
+        <strong>🌾 农夫</strong> - 勤劳质朴<br>
+        初始：资5/功德2/慧3<br>
+        被动：劳作时额外+1资粮<br>
+        主动：分享收成（给他人资粮，双方获得功德）
+    </div>
+    <div class="feature">
+        <strong>💰 商人</strong> - 精于世故<br>
+        初始：资8/功德2/慧1<br>
+        被动：布施时额外+2功德<br>
+        主动：慷慨宴请（全体+功德，劫难-1）
+    </div>
+    <div class="feature">
+        <strong>📚 学者</strong> - 传道授业<br>
+        初始：资4/功德2/慧5<br>
+        被动：修行时额外+1慧<br>
+        主动：讲学传道（给他人慧，自己获得功德）
+    </div>
+    <div class="feature">
+        <strong>🙏 僧侣</strong> - 慈悲为怀<br>
+        初始：资1/功德5/慧5<br>
+        被动：渡化时可用功德代替资粮；护法成本-1<br>
+        主动：加持祈福（加持他人下次行动收益+2）
+    </div>
+
+    <h2>技术说明</h2>
+    <p>本游戏使用纯HTML/CSS/JavaScript实现，无需任何框架或后端服务器。所有游戏数据保存在浏览器的localStorage中。</p>
+    <p>文件说明：</p>
+    <ul>
+        <li><code>ritual.html</code> - 主游戏文件（HTML+CSS）</li>
+        <li><code>ritual-game.js</code> - 游戏逻辑（JavaScript）</li>
+        <li><code>README_RITUAL.md</code> - 详细文档</li>
+    </ul>
+
+    <h2>开发信息</h2>
+    <p>
+        <strong>版本：</strong>v1.0<br>
+        <strong>发布日期：</strong>2026-02-13<br>
+        <strong>代码量：</strong>1715行（886行JS + 829行HTML/CSS）<br>
+        <strong>基于规则：</strong>《功德轮回：众生百态》v5.8 FINAL
+    </p>
+
+    <div class="center" style="margin-top: 50px;">
+        <a href="ritual.html" class="btn">🎮 立即开始游戏</a>
+    </div>
+
+    <p class="center" style="margin-top: 50px; color: #6a6a6a; font-size: 0.9rem;">
+        © 2026 功德轮回网页版 | 基于原作桌游规则改编
+    </p>
+</body>
+</html>
